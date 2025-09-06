@@ -1,3 +1,8 @@
+window.onload = function() {
+        const select = document.querySelector('select');
+        getToDo(select);
+};
+
 function signUp(event) {
     event.preventDefault();
 
@@ -40,7 +45,26 @@ function logIn() {
         console.log(data);
         alert(data.message);
         if (data.status === 200) {
+            localStorage.setItem('user_id', data.data.id);
             window.location.href = "ismissedhome.html";
+        }
+    });
+}
+
+function getToDo(selectValue) {
+    const val = selectValue.value;
+
+    const userID = localStorage.getItem('user_id');
+    console.log(userID);
+
+    fetch(`https://todo-list.dcism.org/getItems_action.php?status=${encodeURIComponent(val)}&user_id=${encodeURIComponent(userID)}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.length > 0) {
+            document.getElementById('with-task').style.display = 'block';
+        } else {
+            document.getElementById('no-task').style.display = 'block';
         }
     });
 }
