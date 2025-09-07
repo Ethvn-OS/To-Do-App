@@ -25,21 +25,21 @@
       </div>
       
       
-      <form class=" text-left">
+      <div class=" text-left">
         
 
         <label for="email" class="block mt-10 mb-4">
-          <input type="text" id="email" name="email" placeholder=" " 
-            class="border-b-2 w-full border-red-900 p-1 bg-transparent"> <br>
-            <label for="email" class="text-black-bean text-sm mt-1">Email</label>
+          <input type="text" id="loginEmail" name="loginEmail" placeholder=" " 
+            class="border-b-2 w-full border-red-900 p-1 bg-transparent" > <br>
+            <label for="loginEmail" class="text-black-bean text-sm mt-1">Email</label>
         </label>
 
         <label for="password" class="block mb-[120px]">
-          <input type="password" id="password" name="password" placeholder=" " 
+          <input type="password" id="loginPass" name="loginPass" placeholder=" " 
             class="border-b-2 w-full border-red-900 p-1 bg-transparent"> <br>
-            <label for="password" class="text-black-bean text-sm mt-1 ">Password</label>
+            <label for="loginPass" class="text-black-bean text-sm mt-1 ">Password</label>
+            <div style="color:red" class="text-sm mt-1" id="error-message"></div>
         </label>
-
         
 
 
@@ -50,12 +50,12 @@
 
         <!-- CHANGE WHEN NAA NAY LOGIN FEATURE!! -->
 
-        <button onclick="window.location.href='ismissedhome.html'" type="button" 
+        <button onclick="logIn()"
         class="w-full bg-marvelous text-black-bean p-2 rounded-md mt-3 hover:bg-new-york-pink">
         Login
         </button>
 
-      </form>
+      </div>
     </div>
   </div>
 

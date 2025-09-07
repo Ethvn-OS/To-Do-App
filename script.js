@@ -43,8 +43,9 @@ function logIn() {
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        alert(data.message);
+        document.getElementById('error-message').innerHTML = data.message;
         if (data.status === 200) {
+            alert(data.message);
             localStorage.setItem('user_id', data.data.id);
             window.location.href = "ismissedhome.html";
         }
