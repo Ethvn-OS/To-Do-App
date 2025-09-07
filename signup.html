@@ -5,19 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>isMissed Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
-<body>
-    <h1>isMissed Sign Up</h1>
+<body class="bg-pink-100 justify-self-center p-8">
+    <div class="justify-items-center  p-8 rounded-xl mt-20 bg-pink-800">
+         <div class="w-10 h-2 border border-xl  rounded-xl mb-5 bg-pink-100 "></div>
+        <h1 class="font- text-4xl pb-8 text-pink-100  font-windsol ">isMissed?</h1>
 
-    First Name: <input type="text" placeholder="John" id="firstName" name="first_name"><br><br>
-    Last Name: <input type="text" placeholder= "Doe" id="lastName" name="last_name"><br><br>
-    Email: <input type="email" placeholder="johndoe@example.com" id="email" name="email"><br><br>
-    Password: <input type="password" id="password" name="password"><br><br>
-    Confirm Password: <input type="password" id="confirmPassword" name="confirm_password"><br><br>
-    <em>Already have an account? <a href="index.html">Click Here</a></em><br><br>
-    <button onclick="signUp(event)">Sign Up</button>
+        <div class="bg-pink-100 p-8 rounded-md ">
+           
+            First Name: <input type="text" placeholder="John" id="firstName" name="first_name"><br><br>
+        Last Name: <input type="text" placeholder= "Doe" id="lastName" name="last_name"><br><br>
+        Email: <input type="email" placeholder="johndoe@example.com" id="email" name="email"><br><br>
+        Password: <input type="password" id="password" name="password"><br><br>
+        Confirm Password: <input type="password" id="confirmPassword" name="confirm_password"><br><br>
+        <em>Already have an account? <a href="index.html">Click Here</a></em><br><br>
+        <button onclick="signUp(event)" class="border border-red-300 p-1 rounded-md text-pink-100">Sign Up</button>
+        </div>
+        
 
-    <script src="jQuery/jquery3.7.1.js" type="text/javascript"></script>
-    <script src="script.js" type="text/javascript"></script>
+        
+        <script src="jQuery/jquery3.7.1.js" type="text/javascript"></script>
+        <script src="script.js" type="text/javascript"></script>
+        
+    </div>
+    
 </body>
 </html>

@@ -5,3 +5,16 @@
 #with-task {
     display: none;
 }
+
+/* Adding font */
+@font-face {
+  font-family: 'WindSol';
+  src: url('fonts/Windsol-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Optional helper class */
+.font-windsol {
+  font-family: 'WindSol', sans-serif;
+}
