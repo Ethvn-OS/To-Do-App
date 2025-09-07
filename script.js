@@ -26,9 +26,10 @@ function signUp(event) {
     })
         .then(response => response.json())
         .then(result => {
+            document.getElementById('error-message').innerHTML = result.message;
             console.log(result);
-            alert(result.message);
             if(result.status === 200) {
+                alert(result.message);
                 window.location.href = "index.html";
             }
         })
