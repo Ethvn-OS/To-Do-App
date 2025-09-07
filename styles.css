@@ -120,3 +120,21 @@
 .border-marvelous {
   border: 2px solid var(--marvelous);
 }
+
+
+/* ========== GRID  AND OTHER STUFF ========== */
+
+.bg-grid {
+  background-color: var(--baby-pink); /* baby pink */
+  background-image: 
+    repeating-linear-gradient(0deg, transparent 0px, transparent 20px, rgba(0,0,0,0.05) 20px, rgba(0,0,0,0.05) 21px),
+    repeating-linear-gradient(90deg, transparent 0px, transparent 20px, rgba(0,0,0,0.05) 20px, rgba(0,0,0,0.05) 21px);
+}
+
+.bg-folder {
+  background-color: rgb(245, 230, 228);
+}
+
+
+
+

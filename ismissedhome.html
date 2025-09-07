@@ -4,20 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>isMissed Home</title>
 </head>
 <body>
-    <a href="index.html">Log Out</a>
-    <h1>isMissed Home</h1>
+    <div class="min-h-screen bg-grid justify-items-center p-8">
+    <!-- main content -->
+    
+        <p class="font-fancy text-black-bean text-3xl mb-24 mt-16 text-left">IsMissed?</p>
+        
+    
+    
+    
+    
+    <div class="relative w-[400px]">
+    <!-- Folder -->
+        <div name="folder" class="h-[550px] w-full rounded-md bg-folder shadow-md p-5">
 
-    <select onchange="getToDo(this)">
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-    </select>
+            <p class="ml-7 text-lg text-black-bean font-bold">To-do List</p>
 
-    <br><br>
-    <div id="no-task">You currently have no tasks.</div>
-    <div id="with-task">Tasks here</div>
+            <!-- individual tasks -->
+            <div name="task" class="flex flex-row w-5/6 h-10 bg-white justify-self-center mt-4 rounded-md ">
+                <input type="checkbox" class="ml-4 accent-red-900">
+                <p class="ml-4 mt-2 text-black-bean">maglulu</p>
+            </div>
+            
+             <!-- add button -->
+            <div id="addButton" class="w-5/6 h-10 bg-black-bean text-white justify-self-center mt-4 rounded-md cursor-pointer hover:bg-black-bean/80 shadow-md">
+                <p class="text-2xl font-bold justify-self-center">+</p>
+            </div>
+            <!-- end of folder -->
+         </div>
+
+
+
+        <!-- Tab -->
+        <div name="tab" 
+            class="absolute -top-3 left-0 bg-folder h-5 w-12 rounded-md">
+        </div>
+
+                </div>
+                <!-- owari -->
+                  <div class="w-10 h-10 rounded-3xl bg-folder justify-self-end mt-[-40px] mr-[450px] shadow-xl ">
+                   <a href="index.html" class="justify-self-center ml-2 text-black-bean text-2xl">⏻</a>
+                  </div>
+            </div>
+
+  
+
+    
 
     <script src="jQuery/jquery3.7.1.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>
