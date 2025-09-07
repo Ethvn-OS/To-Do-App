@@ -14,7 +14,109 @@
   font-style: normal;
 }
 
-/* Optional helper class */
+
+/* Utility font classes */
 .font-windsol {
-  font-family: 'WindSol', sans-serif;
+  font-family: 'Windsol', cursive, sans-serif;
+}
+
+.font-fancy {
+  font-family: 'DM Serif Display', serif;
+}
+
+.font-body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+/* ========== COLORS ========== */
+:root {
+  --baby-pink: #E7C0BC;
+  --black-bean: #370808;
+  --cordovan: #8B3C46;
+  --new-york-pink: #D97E8A;
+  --marvelous: #EC9FAB;
+}
+
+/* ========== FONT CLASSES ========== */
+.font-windsol {
+  font-family: 'Windsol', cursive, sans-serif;
+}
+
+.font-heading {
+  font-family: 'Windsol', cursive, sans-serif;
+  font-weight: bold;
+}
+
+.font-body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========== COLOR CLASSES ========== */
+.bg-baby-pink {
+  background-color: var(--baby-pink);
+}
+
+.bg-black-bean {
+  background-color: var(--black-bean);
+}
+
+.bg-cordovan {
+  background-color: var(--cordovan);
+}
+
+.bg-new-york-pink {
+  background-color: var(--new-york-pink);
+}
+
+.bg-marvelous {
+  background-color: var(--marvelous);
+}
+
+.text-baby-pink {
+  color: var(--baby-pink);
+}
+
+.text-black-bean {
+  color: var(--black-bean);
+}
+
+.text-cordovan {
+  color: var(--cordovan);
+}
+
+.text-new-york-pink {
+  color: var(--new-york-pink);
+}
+
+.text-marvelous {
+  color: var(--marvelous);
+}
+
+.sideways {
+  writing-mode: vertical-rl; /* text flows top to bottom */
+  text-orientation:sideways-right; /* keeps characters upright */
+}
+
+
+/* ========== BORDER CLASSES ========== */
+.border-baby-pink {
+  border: 2px solid var(--baby-pink);
+}
+
+.border-black-bean {
+  border: 2px solid var(--black-bean);
+}
+
+.border-cordovan {
+  border: 2px solid var(--cordovan);
+}
+
+.border-new-york-pink {
+  border: 2px solid var(--new-york-pink);
+}
+
+.border-marvelous {
+  border: 2px solid var(--marvelous);
 }

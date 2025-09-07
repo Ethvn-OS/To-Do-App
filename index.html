@@ -1,21 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>isMissed Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>isMissed Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>isMissed Login</h1>
+<body class="bg-red-100 flex justify-center items-center min-h-screen">
+
+  <!-- Lanyard strap: -->
+  <div class="flex flex-col items-center h-full relative">
     
-    Email: <input type="email" placeholder="dummy@example.com" id="loginEmail"><br><br>
-    Password: <input type="password" id="loginPass"><br><br>
-    <em>Don't have an account? <a href="signup.html">Click Here</a></em><br><br>
-    <button onclick="logIn()">Log In</button>
+    <div class="fixed top-0 w-10 h-3/6 bg-black-bean justify-items-center shadow-md">
+        <p class="font-fancy sideways text-baby-pink mt-2 text-xl">· isMissed ·  isMissed · isMissed · isMissed ·</pp>
+    </div>
+
+    <!-- ID Card: -->
+    <div class="bg-pink-100 p-8 rounded-xl shadow-xl  text-center  relative z-10 mt-24 h-[500px]">
+      <div class="w-16 h-2 bg-black-bean mx-auto mb-4 rounded-md"></div>
+
+      <div class="">
+        <h1 class="text-3xl font-fancy text-black-bean mb-6 ">isMissed?</h1>
+      </div>
+      
+
+      <form class=" text-left">
+        
+
+        <label for="email" class="block mt-10 mb-4">
+          <input type="text" id="email" name="email" placeholder=" " 
+            class="border-b-2 w-full border-red-900 p-1 bg-transparent"> <br>
+            <label for="email" class="text-black-bean text-sm mt-1">Email</label>
+        </label>
+
+        <label for="password" class="block mb-[120px]">
+          <input type="password" id="password" name="password" placeholder=" " 
+            class="border-b-2 w-full border-red-900 p-1 bg-transparent"> <br>
+            <label for="password" class="text-black-bean text-sm mt-1 ">Password</label>
+        </label>
+
+        
 
 
-    <script src="jQuery/jquery3.7.1.js" type="text/javascript"></script>
-    <script src="script.js" type="text/javascript"></script>
+        <em class="text-sm text-cordovan mt-[-90px]">Don't have an account yet? 
+          <a href="signup.html" class="underline">Click Here</a>
+        </em>
+
+
+        <!-- CHANGE WHEN NAA NAY LOGIN FEATURE!! -->
+
+        <button onclick="window.location.href='ismissedhome.html'" type="button" 
+        class="w-full bg-marvelous text-black-bean p-2 rounded-md mt-3 hover:bg-new-york-pink">
+        Login
+        </button>
+
+      </form>
+    </div>
+  </div>
+
 </body>
 </html>
