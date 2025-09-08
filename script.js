@@ -134,29 +134,89 @@ function renderTasks(tasks) {
             const taskElement = createTaskElement(task);
             taskContainer.append(taskElement);
         });
-    }  else {
-        // Show "No tasks found" if there are no tasks
-        taskContainer.append('<div id="no-task" class="ml-7 text-sm text-black-bean"><em>No tasks found</em></div>');
     }
 }
 
 function createTaskElement(task) {
     const taskDiv = $(`
-        <div class="task-item p-3 flex flex-row w-5/6 h-auto bg-white justify-self-center mt-4 rounded-md relative group" data-task-id="${task.id} ">
-            <input type="checkbox" class="ml-4 accent-red-900" ${task.status === 'completed' ? 'checked' : ''}>
-                <div>
-                    <p class="ml-4 text-black-bean font-bold flex-1">${task.title}</p>
-                    <em class="ml-4 mt-1 text-black-bean text-sm flex-1">${task.description}</em>
-                </div>
-            
+        <div class="task-item flex flex-row w-5/6 h-10 bg-white justify-self-center mt-4 rounded-md relative group" data-task-id="${task.id}">
+            <input type="checkbox" class="ml-4 accent-red-900 task-checkbox" ${task.status === 'completed' ? 'checked' : ''} onchange="toggleTaskStatus(${task.id}, this)">
+            <p class="ml-4 mt-2 text-black-bean flex-1 ${task.status === 'completed' ? 'line-through text-gray-500' : ''}">${task.title}</p>
             <div class="task-actions absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex gap-1">
-                <button onclick="editTask(${task.id})" class="edit-btn w-6 h-6 bg-pink-200 text-white rounded text-xs hover:bg-pink-700">✏️</button>
-                <button onclick="deleteTask(${task.id})" class="delete-btn w-6 h-6 bg-red-900 text-white rounded text-xs hover:bg-red-500">🗑️</button>
+                <button onclick="editTask(${task.id})" class="edit-btn w-6 h-6 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">✏️</button>
+                <button onclick="deleteTask(${task.id})" class="delete-btn w-6 h-6 bg-red-500 text-white rounded text-xs hover:bg-red-600">🗑️</button>
             </div>
         </div>
     `);
+
     
     return taskDiv[0]; 
+}
+
+// NEW FUNCTION: Handle checkbox toggle
+function toggleTaskStatus(taskId, checkbox) {
+    const isChecked = checkbox.checked;
+    const newStatus = isChecked ? 'inactive' : 'active'; // inactive = completed, active = pending
+    
+    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+    const taskText = taskElement.querySelector('p').textContent;
+
+    // Update task status via API
+    $.ajax({
+        url: 'https://todo-list.dcism.org/statusItem_action.php',
+        method: 'POST',
+        data: JSON.stringify({
+            item_id: taskId,
+            // item_name: taskText,
+            // item_description: taskText,
+            status: newStatus
+        }),
+        // contentType: 'application/json',
+        dataType: 'json',
+        success: function(response){
+            console.log('Raw API response:', response);
+
+            let parsedResponse;
+            try{
+                if(typeof response === 'object'){
+                    parsedResponse = response; 
+                }else{
+                    parsedResponse = JSON.parse(response);
+                }
+            }catch(parseError){
+                console.error('Failed to parse response as JSON:', parseError);
+                console.error('Response was:', response);
+                checkbox.checked = !isChecked;
+                alert('Server returned invalid response. Check console for more details.');
+                return;
+            }
+
+            console.log('Parsed response:', parsedResponse);
+            
+            if(parsedResponse.status === 200){
+                console.log(`Task ${taskId} status updated to: ${newStatus}`);
+                const selectElement = document.querySelector('select');
+                getToDo(selectElement);
+
+                const statusMessage = isChecked ? 'completed' : 'pending';
+                console.log(`Task moved to ${statusMessage} list`);
+            }else{
+                checkbox.checked = !isChecked; 
+                alert('Error updating task status: ' + (parsedResponse.message || 'Unknown error'));
+                console.error('API Error:', parsedResponse);
+            }
+        },
+        error: function(xhr, status, error){
+            console.error('AJAX Error Details:');
+            console.error('Status:', status);
+            console.error('Error:', error);
+            console.error('Response Text:', xhr.responseText);
+            console.error('Status Code:', xhr.status);
+
+            checkbox.checked = !isChecked; 
+            alert('Error updating task status. Check console for details.');
+        }
+    });
 }
 
 function deleteTask(taskId) {
@@ -170,10 +230,6 @@ function deleteTask(taskId) {
                 if (response.status === 200) {
                     $(`[data-task-id="${taskId}"]`).remove();
                     alert('Task deleted successfully!');
-                    const select = document.querySelector('select');
-                    if (select) {
-                        getToDo(select);
-                    }
                 } else {
                     alert('Error deleting task: ' + response.message);
                 }
@@ -262,10 +318,4 @@ function updateTask(taskId, newText) {
             taskTextElement.style.display = 'block';
         }
     });
-}
-
-function logOut() {
-    localStorage.removeItem("user_id");
-    window.location.href = "index.html";
-    console.log(userID);
 }
