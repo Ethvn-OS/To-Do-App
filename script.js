@@ -65,11 +65,11 @@ function getToDo(selectValue) {
 
     let apiStatus;
     if (val === 'pending') {
-        apiStatus = 'active';
+        apiStatus = 'active'; // only pending tasks will be marked active 
     } else if (val === 'completed') {
-        apiStatus = 'inactive';
+        apiStatus = 'inactive'; // only completed tasks will be marked inactive 
     } else {
-        apiStatus = 'active';
+        apiStatus = 'all'; // allows all tasks to be listed under the "All" dropdown
     }
 
     $.ajax({
@@ -116,6 +116,38 @@ function renderTasks(tasks) {
     tasks.forEach(task => {
         const taskElement = createTaskElement(task);
         taskContainer.append(taskElement);
+    });
+
+    // CHECKBOX EVENT LISTENER FOR STATUS UPDATE 
+    const checkbox = $(taskElement).find('input[type="checkbox"]');
+    checkbox.on('change', function() {
+        const newStatus = this.checked ? 'inactive' : 'active';
+        updateTaskStatus(task.id, newStatus);
+    });
+}
+
+function updateTaskStatus(taskId, status) {
+    $.ajax({
+        url: 'https://todo-list.dcism.org/updateStatus_action.php',
+        method: 'POST',
+        data: JSON.stringify({
+            item_id: taskId,
+            status: status
+        }),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 200) {
+                // Refresh the list to move the task to the correct category
+                const select = document.querySelector('select');
+                if (select) getToDo(select);
+            } else {
+                alert('Error updating status: ' + response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('Error updating status');
+        }
     });
 }
 
