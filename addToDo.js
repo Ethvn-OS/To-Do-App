@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data.status === 200) {
                 alert("Task added successfully!");
-                createTaskElement(data.data);
             } else {
                 alert("Failed to add task: " + (data.message || "Unknown error"));
             }

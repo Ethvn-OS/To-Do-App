@@ -63,41 +63,45 @@ function getToDo(selectValue) {
     const userID = localStorage.getItem('user_id');
     console.log(userID);
 
-    let apiStatus;
+    let apiStatuses = [];
     if (val === 'pending') {
-        apiStatus = 'active';
+        apiStatuses = ['active'];
     } else if (val === 'completed') {
-        apiStatus = 'inactive';
-    } else {
-        apiStatus = 'active';
+        apiStatuses = ['inactive'];
+    } else { // "all"
+        apiStatuses = ['active', 'inactive'];
     }
 
-    $.ajax({
-        url: `https://todo-list.dcism.org/getItems_action.php?status=${apiStatus}&user_id=${userID}`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
+    let allTasks = [];
+    let requests = apiStatuses.map(status =>
+        $.ajax({
+            url: `https://todo-list.dcism.org/getItems_action.php?status=${status}&user_id=${userID}`,
+            method: 'GET',
+            dataType: 'json'
+        })
+    );
 
-            if (response.status === 200 && response.data && Object.keys(response.data).length > 0) {
-                const tasks = Object.values(response.data).map(task => ({
+    $.when(...requests).done(function(...responses) {
+        // If only one status, responses is [response]
+        // If two statuses, responses is [response1, response2]
+        responses.forEach(response => {
+            // jQuery returns [data, textStatus, jqXHR] for each response
+            let data = response[0];
+            if (data.status === 200 && data.data && Object.keys(data.data).length > 0) {
+                const tasks = Object.values(data.data).map(task => ({
                     id: task.item_id,
                     title: task.item_name,
                     description: task.item_description,
                     status: task.status === 'active' ? 'pending' : 'completed'
                 }));
-
-                $('#with-task').show();
-                $('#no-task').hide();
-                renderTasks(tasks);
-            } else {
-                $('#with-task').hide();
-                $('#no-task').show();
+                allTasks = allTasks.concat(tasks);
             }
-        },
-        error: function(error) {
-            console.error('Error loading tasks:', error);
-            $('#with-task').hide();
+        });
+
+        if (allTasks.length > 0) {
+            $('#no-task').hide();
+            renderTasks(allTasks);
+        } else {
             $('#no-task').show();
         }
     });
@@ -113,10 +117,12 @@ function renderTasks(tasks) {
     
     taskContainer.empty();
     
-    tasks.forEach(task => {
-        const taskElement = createTaskElement(task);
-        taskContainer.append(taskElement);
-    });
+    if (tasks.length > 0) {
+        tasks.forEach(task => {
+            const taskElement = createTaskElement(task);
+            taskContainer.append(taskElement);
+        });
+    }
 }
 
 function createTaskElement(task) {
