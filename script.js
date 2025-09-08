@@ -134,6 +134,8 @@ function renderTasks(tasks) {
             const taskElement = createTaskElement(task);
             taskContainer.append(taskElement);
         });
+    } else {
+        taskContainer.append('<div id="no-task" class="ml-7 text-sm text-black-bean"><em>No tasks found.</em></div>');
     }
 }
 
@@ -147,8 +149,8 @@ function createTaskElement(task) {
             </div>
 
             <div class="task-actions absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex gap-1">
-                <button onclick="editTask(${task.id})" class="edit-btn w-6 h-6 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">✏️</button>
-                <button onclick="deleteTask(${task.id})" class="delete-btn w-6 h-6 bg-red-500 text-white rounded text-xs hover:bg-red-600">🗑️</button>
+                <button onclick="editTask(${task.id})" class="edit-btn w-6 h-6 bg-pink-200 text-white rounded text-xs hover:bg-pink-700">✏️</button>
+                <button onclick="deleteTask(${task.id})" class="delete-btn w-6 h-6 bg-red-900 text-white rounded text-xs hover:bg-red-500">🗑️</button>
             </div>
         </div>
     `);
@@ -234,6 +236,10 @@ function deleteTask(taskId) {
                 if (response.status === 200) {
                     $(`[data-task-id="${taskId}"]`).remove();
                     alert('Task deleted successfully!');
+                    const select = document.querySelector('select');
+                    if (select) {
+                        getToDo(select);
+                    }
                 } else {
                     alert('Error deleting task: ' + response.message);
                 }
@@ -322,4 +328,10 @@ function updateTask(taskId, newText) {
             taskTextElement.style.display = 'block';
         }
     });
+}
+
+function logOut(){
+    localStorage.removeItem('user_id');
+    window.location.href = "index.html";
+    console.log(userID);
 }
