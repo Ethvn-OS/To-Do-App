@@ -28,7 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = localStorage.getItem("user_id"); // from login
 
         if (!itemName || !itemDescription || !userId) {
-            alert("Task name, description, and user must be provided!");
+            if (typeof showToast === 'function') {
+                showToast("Task name, description, and user must be provided!", 'warning');
+            } else {
+                console.warn("Toast not available: Task name, description, and user must be provided!");
+            }
             return;
         }
 
@@ -51,14 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 data = JSON.parse(text);
             }catch(err){
                 console.error("Could not parse JSON:", err, text);
-                alert("Server returned invalid response.");
+                if (typeof showToast === 'function') {
+                    showToast("Server returned invalid response.", 'error');
+                }
                 return;
             }
 
             console.log("Server JSON:", data);
 
             if (data.status === 200) {
-                alert("Task added successfully!");
+                if (typeof showToast === 'function') {
+                    showToast("Task added successfully!", 'success');
+                }
                 modal.style.display = "none"; // Hide modal
                 form.reset(); // Clear form fields
                 const select = document.querySelector('select');
@@ -66,12 +74,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     getToDo(select);
                 }
             } else {
-                alert("Failed to add task: " + (data.message || "Unknown error"));
+                if (typeof showToast === 'function') {
+                    showToast("Failed to add task: " + (data.message || "Unknown error"), 'error');
+                }
             }
 
         } catch (err) {
             console.error("Fetch error:", err);
-            alert("Could not connect to the server.");
+            if (typeof showToast === 'function') {
+                showToast("Could not connect to the server.", 'error');
+            }
         }
     });
 

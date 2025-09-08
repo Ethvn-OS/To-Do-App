@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="addToDo.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>isMissed Home</title>
 </head>
@@ -68,9 +69,9 @@
                 <label class="text-black-bean">Description:</label>
                 <input type="text" name="item_description" id="task-desc" required class="p-2 bg-white rounded-md w-full mt-2 "><br><br>
 
-                <div class="flex flex-row space-x-20 justify-self-center">
-                    <button type="submit" class="text-black-bean">Save</button>
-                    <button type="button" id="cancel-btn" class="text-black-bean ">Cancel</button>
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="button" id="cancel-btn" class="px-4 py-2 rounded bg-gray-200 text-black-bean hover:bg-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-red-900 text-white hover:bg-red-700">Save</button>
                 </div>
             </form>
         </div>
