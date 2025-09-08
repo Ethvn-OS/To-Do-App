@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const noTask = document.getElementById("no-task");
 
     // Open modal
-    document.getElementById("add-task-btn").addEventListener("click", () => {
+    document.getElementById("addButton").addEventListener("click", () => {
         modal.style.display = "flex";
         taskName.value = "";
         taskDesc.value = "";
