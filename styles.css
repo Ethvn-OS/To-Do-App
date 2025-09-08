@@ -177,6 +177,32 @@
         scrollbar-color: var(--cordovan) #f5e6e4;
       }
 
+.logOutBtn:hover{
+  cursor: pointer;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
+.logInBtn,
+.signUpBtn,
+.logOutBtn {
+  transition-duration: 0.2s;
+}
 
+.logInBtn:hover,
+.signUpBtn:hover {
+  background-color: #a4646c;
+}
 
+#addButton {
+  transition-duration: 0.2s;
+}
+
+#addButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loginsign {
+  background-image: url('assets/grid.png');
+}
