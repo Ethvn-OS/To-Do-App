@@ -252,3 +252,9 @@ function updateTask(taskId, newText) {
         }
     });
 }
+
+function logOut() {
+    localStorage.removeItem("user_id");
+    window.location.href = "index.html";
+    console.log(userID);
+}
