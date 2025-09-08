@@ -138,7 +138,7 @@ function deleteTask(taskId) {
     if (confirm('Are you sure you want to delete this task?')) {
         $.ajax({
             url: `https://todo-list.dcism.org/deleteItem_action.php?item_id=${taskId}`,
-            method: 'DELETE',
+            method: 'POST',
             dataType: 'json',
             success: function(response) {
                 console.log(response);
@@ -204,13 +204,12 @@ function updateTask(taskId, newText) {
     
     $.ajax({
         url: 'https://todo-list.dcism.org/editItem_action.php',
-        method: 'PUT',
+        method: 'POST',
         data: JSON.stringify({
             item_name: newText,
             item_description: newText, 
             item_id: taskId
         }),
-        contentType: 'application/json',
         dataType: 'json',
         success: function(response) {
             console.log(response);
