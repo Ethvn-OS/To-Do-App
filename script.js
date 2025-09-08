@@ -170,6 +170,10 @@ function deleteTask(taskId) {
                 if (response.status === 200) {
                     $(`[data-task-id="${taskId}"]`).remove();
                     alert('Task deleted successfully!');
+                    const select = document.querySelector('select');
+                    if (select) {
+                        getToDo(select);
+                    }
                 } else {
                     alert('Error deleting task: ' + response.message);
                 }
