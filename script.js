@@ -69,7 +69,7 @@ function getToDo(selectValue) {
     } else if (val === 'completed') {
         apiStatus = 'inactive';
     } else {
-        apiStatus = 'active'; 
+        apiStatus = 'active';
     }
 
     $.ajax({
@@ -78,7 +78,7 @@ function getToDo(selectValue) {
         dataType: 'json',
         success: function(response) {
             console.log(response);
-            
+
             if (response.status === 200 && response.data && Object.keys(response.data).length > 0) {
                 const tasks = Object.values(response.data).map(task => ({
                     id: task.item_id,
@@ -86,7 +86,7 @@ function getToDo(selectValue) {
                     description: task.item_description,
                     status: task.status === 'active' ? 'pending' : 'completed'
                 }));
-                
+
                 $('#with-task').show();
                 $('#no-task').hide();
                 renderTasks(tasks);
