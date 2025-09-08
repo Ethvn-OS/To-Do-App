@@ -59,13 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data.status === 200) {
                 alert("Task added successfully!");
-                noTask.style.display = "none";
-
-                const taskEl = document.createElement("li");
-                taskEl.innerHTML = `<strong>${data.data.item_name}</strong><br>${data.data.item_description}`;
-                withTask.appendChild(taskEl);
-
-                modal.style.display = "none";
+                createTaskElement(data.data);
             } else {
                 alert("Failed to add task: " + (data.message || "Unknown error"));
             }
