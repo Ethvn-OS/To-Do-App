@@ -139,9 +139,13 @@ function renderTasks(tasks) {
 
 function createTaskElement(task) {
     const taskDiv = $(`
-        <div class="task-item flex flex-row w-5/6 h-10 bg-white justify-self-center mt-4 rounded-md relative group" data-task-id="${task.id}">
+        <div class="task-item p-3 flex flex-row w-5/6 h-auto bg-white justify-self-center mt-4 rounded-md relative group" data-task-id="${task.id}">
             <input type="checkbox" class="ml-4 accent-red-900 task-checkbox" ${task.status === 'completed' ? 'checked' : ''} onchange="toggleTaskStatus(${task.id}, this)">
-            <p class="ml-4 mt-2 text-black-bean flex-1 ${task.status === 'completed' ? 'line-through text-gray-500' : ''}">${task.title}</p>
+            <div>
+                <p class="ml-4 mt-2 text-black-bean flex-1 ${task.status === 'completed' ? 'line-through text-gray-500' : ''}">${task.title}</p>
+                <em class="ml-4 mt-1 text-black-bean text-sm flex-1 ${task.status === 'completed' ? 'line-through text-gray-500' : ''}">${task.description}</em>
+            </div>
+
             <div class="task-actions absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex gap-1">
                 <button onclick="editTask(${task.id})" class="edit-btn w-6 h-6 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">✏️</button>
                 <button onclick="deleteTask(${task.id})" class="delete-btn w-6 h-6 bg-red-500 text-white rounded text-xs hover:bg-red-600">🗑️</button>
