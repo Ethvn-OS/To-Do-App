@@ -11,31 +11,33 @@
     <div class="min-h-screen bg-grid justify-items-center p-8">
     <!-- main content -->
     
-        <p class="font-fancy text-black-bean text-3xl mb-24 mt-16 text-left">IsMissed?</p>
+        <p class="font-fancy text-black-bean text-3xl mb-14 mt-2 text-left">IsMissed?</p>
         
     
     
     
     
-    <div class="relative w-[400px]">
+    <div class="relative w-[400px] ">
     <!-- Folder -->
-        <div name="folder" class="h-[550px] w-full rounded-md bg-folder shadow-md p-5">
+        <div name="folder" class="h-[520px] w-full rounded-md bg-folder shadow-md p-5">
 
-            <p class="ml-7 text-lg text-black-bean font-bold">To-do List</p>
+            <p class="ml-7 text-3xl text-black-bean font-bold">To-do List</p>
 
             <!-- Filter dropdown -->
-            <select class="ml-7 mt-2 w-5/6 h-8 bg-white border border-gray-300 rounded text-sm text-black-bean" onchange="getToDo(this)">
+            <select class="ml-7 mt-2 w-5/6 h-8 bg-white  rounded text-sm text-black-bean" onchange="getToDo(this)">
                 <option value="all">All Tasks</option>
                 <option value="pending">Pending</option>
                 <option value="completed">Completed</option>
             </select>
 
             <!-- Task container for dynamic tasks -->
-            <div id="no-task" class="ml-7 mt-4 text-gray-500 text-sm">No tasks found</div>
-            <div id="with-task" class="hidden"></div>
+            <div class="task-container h-[320px] overflow-y-auto mt-4">
+                <div id="no-task" class="ml-7 text-black text-sm italic"><em>No tasks found</em></div>
+            </div>
             
              <!-- add button -->
-            <div id="addButton" class="w-5/6 h-10 bg-black-bean text-white justify-self-center mt-4 rounded-md cursor-pointer hover:bg-black-bean/80 shadow-md">
+            <div id="addButton" class="w-5/6 h-10 bg-black-bean text-white justify-self-center mt-4 rounded-md cursor-pointer
+                                    transform hover:translate-y-[-1px] ease-in duration-100 bg-black-bean/80 shadow-lg">
                 <p class="text-2xl font-bold justify-self-center">+</p>
             </div>
             <!-- end of folder -->
@@ -58,16 +60,18 @@
         <!-- Modal -->
         <div id="task-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
             background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-            <form id="task-form" style="background:#fff; padding:20px; border-radius:10px; min-width:300px;">
-                <h2>Add Task</h2>
-                <label>Task Name:</label><br>
-                <input type="text" name="item_name" id="task-name" required><br><br>
+            <form id="task-form" style="background: rgb(245, 230, 228); padding:20px; border-radius:10px; min-width:300px;">
+                <h2 class="justify-self-center text-black-bean font-bold">Add Task</h2>
+                <label class="text-black-bean mb-4">Task Name:</label><br>
+                <input type="text" name="item_name" id="task-name" required class="p-2 bg-white rounded-md w-full mt-2"><br><br>
 
-                <label>Description:</label>
-                <input type="text" name="item_description" id="task-desc" required><br><br>
+                <label class="text-black-bean">Description:</label>
+                <input type="text" name="item_description" id="task-desc" required class="p-2 bg-white rounded-md w-full mt-2 "><br><br>
 
-                <button type="submit">Save</button>
-                <button type="button" id="cancel-btn">Cancel</button>
+                <div class="flex flex-row space-x-20 justify-self-center">
+                    <button type="submit" class="text-black-bean">Save</button>
+                    <button type="button" id="cancel-btn" class="text-black-bean ">Cancel</button>
+                </div>
             </form>
         </div>
 

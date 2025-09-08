@@ -1,6 +1,4 @@
-#no-task {
-    display: none;
-}
+
 
 #with-task {
     display: none;
@@ -160,13 +158,24 @@
   transform: scale(1.1);
 }
 
-.edit-btn:hover {
-  background-color: #3b82f6 !important;
-}
-
-.delete-btn:hover {
-  background-color: #dc2626 !important;
-}
+.task-container::-webkit-scrollbar {
+        width: 8px;
+        background: #f5e6e4; /* Tailwind pink-100 */
+        border-radius: 8px;
+      }
+      .task-container::-webkit-scrollbar-thumb {
+        background: #070607; /* Tailwind pink-500 */
+        border-radius: 8px;
+        border: 2px solid #f5e6e4;
+      }
+      .task-container::-webkit-scrollbar-thumb:hover {
+        background: #84073f; /* Tailwind pink-600 */
+      }
+      /* Firefox */
+      .task-container {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cordovan) #f5e6e4;
+      }
 
 
 
