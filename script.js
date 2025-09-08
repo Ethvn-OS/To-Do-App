@@ -63,42 +63,58 @@ function getToDo(selectValue) {
     const userID = localStorage.getItem('user_id');
     console.log(userID);
 
-    let apiStatus;
+    let apiStatuses = [];
     if (val === 'pending') {
-        apiStatus = 'active'; // only pending tasks will be marked active 
+        apiStatuses = ['active'];
     } else if (val === 'completed') {
-        apiStatus = 'inactive'; // only completed tasks will be marked inactive 
-    } else {
-        apiStatus = 'all'; // allows all tasks to be listed under the "All" dropdown
+        apiStatuses = ['inactive'];
+    } else { // "all"
+        apiStatuses = ['active', 'inactive'];
     }
 
-    $.ajax({
-        url: `https://todo-list.dcism.org/getItems_action.php?status=${apiStatus}&user_id=${userID}`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
+    console.log(apiStatuses);
 
-            if (response.status === 200 && response.data && Object.keys(response.data).length > 0) {
-                const tasks = Object.values(response.data).map(task => ({
+    let allTasks = [];
+    let requests = apiStatuses.map(status =>
+        $.ajax({
+            url: `https://todo-list.dcism.org/getItems_action.php?status=${status}&user_id=${userID}`,
+            method: 'GET',
+            dataType: 'json'
+        })
+    );
+
+    $.when(...requests).done(function() {
+        let responseArgs = arguments;
+        // If only one request, arguments is [data, textStatus, jqXHR]
+        // If multiple, arguments is [[data, textStatus, jqXHR], [data, textStatus, jqXHR]]
+        let responseList = [];
+        if (apiStatuses.length === 1) {
+            responseList = [responseArgs];
+        } else {
+            responseList = Array.from(responseArgs);
+        }
+
+        responseList.forEach(response => {
+            // For each response: response[0] is the data
+            if (!response || !response[0]) return;
+            let data = response[0];
+            if (data.status === 200 && data.data && Object.keys(data.data).length > 0) {
+                const tasks = Object.values(data.data).map(task => ({
                     id: task.item_id,
                     title: task.item_name,
                     description: task.item_description,
                     status: task.status === 'active' ? 'pending' : 'completed'
                 }));
-
-                $('#with-task').show();
-                $('#no-task').hide();
-                renderTasks(tasks);
-            } else {
-                $('#with-task').hide();
-                $('#no-task').show();
+                allTasks = allTasks.concat(tasks);
             }
-        },
-        error: function(error) {
-            console.error('Error loading tasks:', error);
-            $('#with-task').hide();
+        });
+
+        if (allTasks.length > 0) {
+            $('#no-task').hide();
+            renderTasks(allTasks);
+        } else {
             $('#no-task').show();
+            renderTasks([]);
         }
     });
 }
@@ -113,42 +129,12 @@ function renderTasks(tasks) {
     
     taskContainer.empty();
     
-    tasks.forEach(task => {
-        const taskElement = createTaskElement(task);
-        taskContainer.append(taskElement);
-    });
-
-    // CHECKBOX EVENT LISTENER FOR STATUS UPDATE 
-    const checkbox = $(taskElement).find('input[type="checkbox"]');
-    checkbox.on('change', function() {
-        const newStatus = this.checked ? 'inactive' : 'active';
-        updateTaskStatus(task.id, newStatus);
-    });
-}
-
-function updateTaskStatus(taskId, status) {
-    $.ajax({
-        url: 'https://todo-list.dcism.org/updateStatus_action.php',
-        method: 'POST',
-        data: JSON.stringify({
-            item_id: taskId,
-            status: status
-        }),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function(response) {
-            if (response.status === 200) {
-                // Refresh the list to move the task to the correct category
-                const select = document.querySelector('select');
-                if (select) getToDo(select);
-            } else {
-                alert('Error updating status: ' + response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            alert('Error updating status');
-        }
-    });
+    if (tasks.length > 0) {
+        tasks.forEach(task => {
+            const taskElement = createTaskElement(task);
+            taskContainer.append(taskElement);
+        });
+    }
 }
 
 function createTaskElement(task) {
