@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>isMissed Home</title>
+    <title>isMissed | Home</title>
 </head>
 <body>
     <a href="index.html">Log Out</a>
@@ -16,10 +16,31 @@
     </select>
 
     <br><br>
+    <button id="add-task-btn">Add Task</button>
+    <br><br>
+
     <div id="no-task">You currently have no tasks.</div>
-    <div id="with-task">Tasks here</div>
+    <div id="with-task">Tasks here:</div>
+
+    <!-- Modal -->
+    <div id="task-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+        background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+        <form id="task-form" style="background:#fff; padding:20px; border-radius:10px; min-width:300px;">
+            <h2>Add Task</h2>
+            <label>Task Name:</label><br>
+            <input type="text" name="item_name" id="task-name" required><br><br>
+
+            <label>Description:</label><br>
+            <input type="text" name="item_description" id="task-desc" required><br><br>
+
+            <button type="submit">Save</button>
+            <button type="button" id="cancel-btn">Cancel</button>
+        </form>
+    </div>
 
     <script src="jQuery/jquery3.7.1.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>
+    <script src="addToDo.js" type="text/javascript"></script>
+    <script src="updateToDo.js" type="text/javascript"></script>
 </body>
 </html>

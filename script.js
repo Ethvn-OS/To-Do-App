@@ -1,6 +1,13 @@
 window.onload = function() {
+    // Only auto-run on login page where login inputs exist
+    var loginEmail = document.getElementById('loginEmail');
+    var loginPass = document.getElementById('loginPass');
+    if (loginEmail && loginPass) {
         const select = document.querySelector('select');
-        getToDo(select);
+        if (select) {
+            getToDo(select);
+        }
+    }
 };
 
 function signUp(event) {
@@ -52,19 +59,11 @@ function logIn() {
 }
 
 function getToDo(selectValue) {
-    const val = selectValue.value;
-
+    const val = selectValue ? selectValue.value : 'active';
     const userID = localStorage.getItem('user_id');
-    console.log(userID);
-
-    fetch(`https://todo-list.dcism.org/getItems_action.php?status=${encodeURIComponent(val)}&user_id=${encodeURIComponent(userID)}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        if (data.length > 0) {
-            document.getElementById('with-task').style.display = 'block';
-        } else {
-            document.getElementById('no-task').style.display = 'block';
-        }
-    });
+    if (!userID) return;
+    // Delegate to new renderer in addToDo.js
+    if (typeof window.fetchAndRenderTasks === 'function') {
+        window.fetchAndRenderTasks();
+    }
 }
