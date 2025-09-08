@@ -59,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data.status === 200) {
                 alert("Task added successfully!");
+                modal.style.display = "none"; // Hide modal
+                form.reset(); // Clear form fields
+                const select = document.querySelector('select');
+                if (select) {
+                    getToDo(select);
+                }
             } else {
                 alert("Failed to add task: " + (data.message || "Unknown error"));
             }

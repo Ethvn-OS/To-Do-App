@@ -72,6 +72,8 @@ function getToDo(selectValue) {
         apiStatuses = ['active', 'inactive'];
     }
 
+    console.log(apiStatuses);
+
     let allTasks = [];
     let requests = apiStatuses.map(status =>
         $.ajax({
@@ -81,11 +83,20 @@ function getToDo(selectValue) {
         })
     );
 
-    $.when(...requests).done(function(...responses) {
-        // If only one status, responses is [response]
-        // If two statuses, responses is [response1, response2]
-        responses.forEach(response => {
-            // jQuery returns [data, textStatus, jqXHR] for each response
+    $.when(...requests).done(function() {
+        let responseArgs = arguments;
+        // If only one request, arguments is [data, textStatus, jqXHR]
+        // If multiple, arguments is [[data, textStatus, jqXHR], [data, textStatus, jqXHR]]
+        let responseList = [];
+        if (apiStatuses.length === 1) {
+            responseList = [responseArgs];
+        } else {
+            responseList = Array.from(responseArgs);
+        }
+
+        responseList.forEach(response => {
+            // For each response: response[0] is the data
+            if (!response || !response[0]) return;
             let data = response[0];
             if (data.status === 200 && data.data && Object.keys(data.data).length > 0) {
                 const tasks = Object.values(data.data).map(task => ({
@@ -103,6 +114,7 @@ function getToDo(selectValue) {
             renderTasks(allTasks);
         } else {
             $('#no-task').show();
+            renderTasks([]);
         }
     });
 }
